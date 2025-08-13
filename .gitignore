@@ -1,0 +1,131 @@
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.suo
+
+# Ignore build and compilation files
+node_modules/
+dist/
+build/
+target/
+out/
+release/
+debug/
+
+# Ignore package manager files
+package-lock.json
+yarn.lock
+npm-debug.log
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore environment variables
+.env
+.env.*.local
+.env.local
+
+# Ignore common programming language files
+*.class
+*.exe
+*.o
+*.obj
+*.dll
+*.so
+
+# Ignore cached files
+/.cache/
+/.idea/workspace.xml
+/.vscode/.vscode-extensions.json
+/.vscode/extensions.json
+/.vscode/settings.json
+/.vscode/tasks.json
+
+# Ignore source control cached files
+/.gitignore~
+/.gitattributes~
+/.gitmodules~
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build and cache
+.next/
+out/
+.parcel-cache/
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Compiled binary addons
+build/Release/
+
+# Dependency directories
+bower_components/
+jspm_packages/
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# ESLint/Stylelint caches
+.eslintcache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_*
+
+# REPL history
+.node_repl_history
+
+# Output of `npm pack`
+*.tgz
+
+# Yarn specific
+.yarn-integrity
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Framework-specific
+.nuxt/
+.vuepress/dist/
+.docusaurus/
+.serverless/
+.fusebox/
+.dynamodb/
+
+# IDE/editor
+.vscode-test/
+.tern-port
