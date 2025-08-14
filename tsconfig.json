@@ -26,7 +26,9 @@
     "**/*.tsx",
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "pages/api/auth/signup.js"
+    "pages/api/auth/signup.js",
+    "src/**/*",
+    "src/types/**/*"
   ],
   "exclude": ["node_modules"]
 }

@@ -3,11 +3,16 @@ import NavBar from "../../../components/NavBar";
 import Footer from "../../../components/Footer";
 import { blog } from "../../../lib/mockData";
 
-type Props = { params: { slug: string } };
+type Props = {
+  params: Promise<{ slug: string }>;
+};
 
-export default function BlogPost({ params }: Props) {
-  const post = blog.find((b) => b.slug === params.slug);
+export default async function BlogPost({ params }: Props) {
+  const { slug } = await params;
+  const post = blog.find((b) => b.slug === slug);
+
   if (!post) return <div className="p-8">Not found</div>;
+
   return (
     <>
       <NavBar />

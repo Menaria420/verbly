@@ -4,11 +4,14 @@ import Footer from "../../../components/Footer";
 import { courses } from "../../../lib/mockData";
 import Link from "next/link";
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
-export default function CourseDetail({ params }: Props) {
-  const course = courses.find((c) => c.id === params.id);
+export default async function CourseDetail({ params }: Props) {
+  const { id } = await params;
+  const course: any = courses.find((c) => c.id === id);
+
   if (!course) return <div className="p-8">Course not found</div>;
+
   return (
     <>
       <NavBar />
