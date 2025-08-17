@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Button } from "@nextui-org/react";
+import api from "@/src/lib/axios";
 
 type AuthFormInputs = {
   name?: string;
@@ -24,42 +25,41 @@ export default function AuthPage() {
     formState: { errors, isSubmitting },
   } = useForm<AuthFormInputs>();
   const router = useRouter();
-
   const onSubmit = async (data: AuthFormInputs) => {
-    if (isLogin) {
-      // LOGIN
-      const res = await signIn("credentials", {
-        redirect: false,
-        email: data.email,
-        password: data.password,
-      });
-
-      if (res?.error) {
-        alert("Invalid credentials");
-      } else {
-        router.push("/dashboard");
-      }
-    } else {
-      // REGISTER (send to your API route)
-      try {
-        const res = await fetch("/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-
-        if (!res.ok) throw new Error("Registration failed");
-
-        // auto login after register
-        await signIn("credentials", {
-          redirect: false,
+    try {
+      if (isLogin) {
+        // LOGIN with backend API
+        console.log("Login", isLogin, "data", data);
+        const res = await api.post("/auth/login", {
           email: data.email,
           password: data.password,
         });
+
+        // store token/user data as needed
+        // e.g., localStorage, redux, or let next-auth handle it
+        console.log("Login Success:", res.data);
+
+        // OPTIONAL: if backend returns JWT, you can set it in cookies or state
         router.push("/dashboard");
-      } catch (err: any) {
-        alert(err.message || "Something went wrong");
+      } else {
+        // REGISTER with backend API
+        console.log("register", !isLogin, "Registration", data);
+        // const res = await api.post("/auth/register", {
+        //   name: data.name,
+        //   email: data.email,
+        //   password: data.password,
+        // });
+
+        // // Auto login after register (hit login endpoint)
+        // await api.post("/auth/login", {
+        //   email: data.email,
+        //   password: data.password,
+        // });
+
+        // router.push("/dashboard");
       }
+    } catch (err: any) {
+      alert(err.message || "Something went wrong");
     }
   };
 
@@ -142,7 +142,6 @@ export default function AuthPage() {
           )}
         </div>
         <Button
-          onPress={() => setIsLogin((prev) => !prev)}
           color="primary"
           type="submit"
           disabled={isSubmitting}
@@ -182,7 +181,7 @@ export default function AuthPage() {
           color="primary"
           className="btn_dark ml-2"
           type="button"
-          onPress={() => setIsLogin(!isLogin)}
+          onPress={() => setIsLogin(!isLogin)} // ✅ this is the real toggle
         >
           {isLogin ? "Register here" : "Login here"}
         </Button>

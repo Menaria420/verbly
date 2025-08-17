@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 // @ts-expect-error
 import { themes } from "../theme"; // your theme.js
 import { usePathname } from "next/navigation";
+import { Button } from "@nextui-org/react";
 
 export default function NavBar() {
   const { data: session } = useSession();
@@ -19,7 +20,7 @@ export default function NavBar() {
       root.style.setProperty(`--color-${key}`, value);
     });
   }, [theme]);
-
+  const pathname = usePathname();
   return (
     <nav className="navbar shadow-lg sticky top-0 w-full z-50">
       <div className="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -36,14 +37,30 @@ export default function NavBar() {
         <div className="hidden md:flex items-center space-x-6 font-medium">
           {session?.user ? (
             <>
-              <Link href="/courses">Courses</Link>
-              <Link href="/about">About</Link>
-              <Link href="/blog">Blog</Link>
+              <Link href="/courses">
+                <p className={pathname == "/courses" ? `text-blue-400` : ""}>
+                  Courses
+                </p>
+              </Link>
+              <Link href="/about">
+                <p className={pathname == "/about" ? `text-blue-400` : ""}>
+                  About
+                </p>
+              </Link>
+              <Link href="/blog">
+                <p className={pathname == "/blog" ? `text-blue-400` : ""}>
+                  Blog
+                </p>
+              </Link>
 
-              <Link href="/dashboard">Dashboard</Link>
-              <button className="px-4 py-2 btn_dark" onClick={() => signOut()}>
+              <Link href="/dashboard">
+                <p className={pathname == "/dashboard" ? `text-blue-400` : ""}>
+                  Dashboard
+                </p>
+              </Link>
+              <Button className=" btn_dark" onClick={() => signOut()}>
                 Sign out
-              </button>
+              </Button>
             </>
           ) : (
             <>
@@ -56,18 +73,18 @@ export default function NavBar() {
           )}
 
           {/* Theme Toggle */}
-          <button
-            onClick={() =>
+          <Button
+            onPress={() =>
               setTheme((prev) => (prev === "light" ? "dark" : "light"))
             }
-            className="px-3 py-1 rounded-md border transition"
+            className=" rounded-md "
             style={{
               borderColor: "white",
               color: "white",
             }}
           >
             {theme === "light" ? "🌙" : "☀️"}
-          </button>
+          </Button>
         </div>
 
         {/* Mobile Hamburger */}
