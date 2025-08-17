@@ -11,9 +11,11 @@ import api from "@/src/lib/axios";
 import { useAlert } from "@/src/components/AlertProvider";
 
 type AuthFormInputs = {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   password: string;
+  role?: string;
 };
 
 export default function AuthPage() {
@@ -45,7 +47,8 @@ export default function AuthPage() {
       } else {
         // REGISTER
         const res = await api.post("/api/v1/auth/register", {
-          name: data.name,
+          firstName: data.firstName,
+          lastName: data.lastName,
           email: data.email,
           password: data.password,
         });
@@ -77,19 +80,53 @@ export default function AuthPage() {
         noValidate
       >
         {!isLogin && (
-          <div>
-            <input
-              {...register("name", {
-                required: !isLogin ? "Name is required" : false,
-              })}
-              placeholder="Full Name"
-              type="text"
-              className="w-full p-3 rounded border focus:outline-none focus:ring-2 focus:ring-accent"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
-          </div>
+          <>
+            <div>
+              <input
+                {...register("firstName", {
+                  required: !isLogin ? "First name is required" : false,
+                })}
+                placeholder="First Name"
+                type="text"
+                className="w-full p-3 rounded-[.5rem] border focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+              {errors.firstName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.firstName.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <input
+                {...register("lastName", {
+                  required: !isLogin ? "Last name is required" : false,
+                })}
+                placeholder="Last Name"
+                type="text"
+                className="w-full p-3 rounded-[.5rem] border focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+              {errors.lastName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.lastName.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <input
+                {...register("role", {
+                  required: !isLogin ? "Role is required" : false,
+                })}
+                placeholder="Role"
+                type="text"
+                className="w-full p-3 rounded-[.5rem] border focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+              {errors.role && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.role.message}
+                </p>
+              )}
+            </div>
+          </>
         )}
 
         <div>
@@ -103,7 +140,7 @@ export default function AuthPage() {
             })}
             placeholder="Email"
             type="email"
-            className="w-full p-3 rounded border focus:outline-none focus:ring-2 focus:ring-accent"
+            className="w-full p-3 rounded-[.5rem] border focus:outline-none focus:ring-2 focus:ring-accent"
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -118,7 +155,7 @@ export default function AuthPage() {
             })}
             placeholder="Password"
             type={showPassword ? "text" : "password"}
-            className="w-full p-3 rounded border focus:outline-none focus:ring-2 focus:ring-accent pr-12"
+            className="w-full p-3 rounded-[.5rem] border focus:outline-none focus:ring-2 focus:ring-accent pr-12"
           />
 
           <Button
