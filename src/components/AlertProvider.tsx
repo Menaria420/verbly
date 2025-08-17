@@ -61,9 +61,9 @@ export const AlertProvider: React.FC<{ children: React.ReactNode }> = ({
     (message: string, type: AlertType = "success") => {
       const id = Date.now();
       setAlerts((prev) => [...prev, { id, type, message }]);
-      //   setTimeout(() => {
-      //     setAlerts((prev) => prev.filter((a) => a.id !== id));
-      //   }, 4000);
+      setTimeout(() => {
+        setAlerts((prev) => prev.filter((a) => a.id !== id));
+      }, 4000);
     },
     []
   );
