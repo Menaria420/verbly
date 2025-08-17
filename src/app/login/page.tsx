@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Button } from "@nextui-org/react";
 import api from "@/src/lib/axios";
+import { useAlert } from "@/src/components/AlertProvider";
 
 type AuthFormInputs = {
   name?: string;
@@ -18,6 +19,7 @@ type AuthFormInputs = {
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true); // toggle login/register
   const [showPassword, setShowPassword] = useState(false);
+  const { showAlert } = useAlert();
 
   const {
     register,
@@ -28,9 +30,9 @@ export default function AuthPage() {
   const onSubmit = async (data: AuthFormInputs) => {
     try {
       if (isLogin) {
-        // LOGIN with backend API
+        // LOGIN
         console.log("Login", isLogin, "data", data);
-        const res = await api.post("/auth/login", {
+        const res = await api.post("/api/v1/auth/login", {
           email: data.email,
           password: data.password,
         });
@@ -38,33 +40,29 @@ export default function AuthPage() {
         // store token/user data as needed
         // e.g., localStorage, redux, or let next-auth handle it
         console.log("Login Success:", res.data);
-
         // OPTIONAL: if backend returns JWT, you can set it in cookies or state
         router.push("/dashboard");
       } else {
-        // REGISTER with backend API
-        console.log("register", !isLogin, "Registration", data);
-        // const res = await api.post("/auth/register", {
-        //   name: data.name,
-        //   email: data.email,
-        //   password: data.password,
-        // });
-
-        // // Auto login after register (hit login endpoint)
-        // await api.post("/auth/login", {
-        //   email: data.email,
-        //   password: data.password,
-        // });
-
-        // router.push("/dashboard");
+        // REGISTER
+        const res = await api.post("/api/v1/auth/register", {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        });
+        await api.post("/auth/login", {
+          email: data.email,
+          password: data.password,
+        });
+        router.push("/dashboard");
       }
+      showAlert("Logged in successfully ✅", "success");
     } catch (err: any) {
-      alert(err.message || "Something went wrong");
+      showAlert(err.message || "Something went wrong ❌", "danger");
     }
   };
 
   const handleGoogleLogin = async () => {
-    await signIn("google", { callbackUrl: "/dashboard" });
+    const resp = await signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (

@@ -10,6 +10,7 @@ export const metadata = {
 };
 
 import { NextUIProvider } from "@nextui-org/react";
+import { AlertProvider } from "../components/AlertProvider";
 export default function RootLayout({
   children,
 }: {
@@ -20,9 +21,11 @@ export default function RootLayout({
       <body>
         <Providers>
           <NextUIProvider>
-            <ThemeClient />
-            <NavBar />
-            <main className="pt-16">{children}</main>
+            <AlertProvider>
+              <ThemeClient />
+              <NavBar />
+              <main className="pt-16">{children}</main>
+            </AlertProvider>
           </NextUIProvider>
         </Providers>
       </body>
