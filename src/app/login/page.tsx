@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import GoogleProvider from "next-auth/providers/google";
 
 type LoginFormInputs = {
   email: string;
