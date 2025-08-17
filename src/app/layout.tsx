@@ -1,6 +1,8 @@
+// src/app/layout.tsx
 import "../globals.css";
-import React from "react";
 import { Providers } from "../providers";
+import ThemeClient from "./theme-client";
+import NavBar from "../components/NavBar";
 
 export const metadata = {
   title: "Verbly Platform",
@@ -14,8 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning>
-        <Providers>{children}</Providers>
+      <body>
+        <Providers>
+          <ThemeClient />
+          <NavBar />
+          <main className="pt-16">{children}</main>
+        </Providers>
       </body>
     </html>
   );
